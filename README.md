@@ -6,6 +6,60 @@ In fast-paced, high-volume laboratory and manufacturing environments, manual tem
 
 This system provides a live-view dashboard while silently exporting and graphing data directly into Excel, ensuring zero manual post-processing and protecting data integrity.
 
+```mermaid
+flowchart TD
+    subgraph Phase1 [Phase 1: Data Transmission]
+        A[Omega Wireless Logger] -- Raw °F Radio Signal --> B[USB Receiver COM4]
+    end
+
+    subgraph Phase2 [Phase 2: Live Processing]
+        C{Mission Control Script}
+        D[Identify Logger Address]
+        E[Filter 9998 Error Spikes]
+        F[Pure Math °F to °C Conversion]
+        G[Write to CSV or RAM Buffer]
+    end
+
+    subgraph Phase3 [Phase 3: Live Dashboard]
+        H[Assign Dashboard Color]
+        I[Plot Live °C Data Point]
+        J[Auto-Scale ±20% Y-Axis]
+    end
+
+    subgraph Phase4 [Phase 4: Post-Processing]
+        K{Excel Auto-Generator}
+        L[Read Completed Temp CSV]
+        M[Generate Official .xlsx]
+        N[Delete Temp CSV]
+    end
+
+    subgraph Phase5 [Phase 5: Final Storage]
+        O[(Local Export Directory)]
+        P[(Local Backup Directory)]
+        Q[Log to Usage_History_Log.csv]
+    end
+
+    %% Connections
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    
+    G --> H
+    H --> I
+    I --> J
+    
+    G -. 5-Min Timeout .-> K
+    K --> L
+    L --> M
+    M --> N
+    
+    M --> O
+    M --> P
+    M --> Q
+```
+
 ## ✨ Key Features
 * **Automated Data Pipeline:** Eliminates manual data handling by automatically exporting and formatting logger data directly into Excel spreadsheets.
 * **Live-View Visualization:** Real-time monitoring of multiple Omega temperature probes simultaneously on a unified dashboard.
